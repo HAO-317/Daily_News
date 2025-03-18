@@ -52,7 +52,7 @@ async function fetchNews(language: string, sort: string, query?: string): Promis
 
   try {
       console.log('Fetching news for language:', language, 'sort:', sort, 'query:', query); // 调试日志
-      const response: Response = await fetch('/news-data.json');
+      const response: Response = await fetch('/Daily_News/news-data.json');
       if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
       }

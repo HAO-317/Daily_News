@@ -62,7 +62,7 @@ if (!newsContainer || !languageSelect || !sortSelect || !searchInput || !searchB
 }
 function fetchNews(language, sort, query) {
     return __awaiter(this, void 0, void 0, function () {
-        var startTime, response, newsData, endTime, timeTaken, data, error_1;
+        var startTime, response, newsData, endTime, timeTaken, data_1, newsCards, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -71,27 +71,59 @@ function fetchNews(language, sort, query) {
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 4, , 5]);
-                    return [4 /*yield*/, fetch('/news-data.json')];
+                    console.log('Fetching news for language:', language, 'sort:', sort, 'query:', query); // 调试日志
+                    return [4 /*yield*/, fetch('/Daily_News/news-data.json')];
                 case 2:
                     response = _a.sent();
+                    if (!response.ok) {
+                        throw new Error("HTTP error! Status: ".concat(response.status));
+                    }
                     return [4 /*yield*/, response.json()];
                 case 3:
                     newsData = _a.sent();
                     endTime = performance.now();
                     timeTaken = Math.round(endTime - startTime);
-                    data = void 0;
                     if (query) {
-                        data = newsData["".concat(language, "-").concat(sort)];
-                        data.articles = data.articles.filter(function (article) {
+                        data_1 = newsData["".concat(language, "-").concat(sort)];
+                        data_1.articles = data_1.articles.filter(function (article) {
                             return article.title.toLowerCase().includes(query.toLowerCase()) ||
                                 (article.description && article.description.toLowerCase().includes(query.toLowerCase()));
                         });
-                        data.totalResults = data.articles.length;
+                        data_1.totalResults = data_1.articles.length;
                     }
                     else {
-                        data = newsData["".concat(language, "-").concat(sort)];
+                        data_1 = newsData["".concat(language, "-").concat(sort)];
                     }
-                    console.log('API react:', data);
+                    console.log('API 响应:', data_1);
+                    if (!data_1 || data_1.status !== 'ok') {
+                        throw new Error('Data not available');
+                    }
+                    newsContainer.innerHTML = '';
+                    resultCount.textContent = data_1.totalResults.toString();
+                    loadTime.textContent = timeTaken.toString();
+                    if (data_1.articles.length === 0) {
+                        newsContainer.innerHTML = '<div class="loading">No related news</div>';
+                        return [2 /*return*/];
+                    }
+                    data_1.articles.forEach(function (article, index) {
+                        var newsCard = "\n              <div class=\"news-card\" data-index=\"".concat(index, "\">\n                  <img src=\"").concat(article.urlToImage || 'https://picsum.photos/300/150', "\" alt=\"News Picture\">\n                  <div class=\"news-content\">\n                      <h2>").concat(article.title, "</h2>\n                      <p>").concat(article.description || 'No description yet', "</p>\n                      <div class=\"source\">Source: ").concat(article.source.name, "</div>\n                      <div class=\"date\">Date: ").concat(new Date(article.publishedAt).toLocaleDateString(), "</div>\n                  </div>\n              </div>\n          ");
+                        newsContainer.insertAdjacentHTML('beforeend', newsCard);
+                    });
+                    updateFontSize();
+                    newsCards = document.querySelectorAll('.news-card');
+                    newsCards.forEach(function (card, index) {
+                        card.addEventListener('click', function () {
+                            var article = data_1.articles[index];
+                            modalTitle.textContent = article.title;
+                            modalImage.src = article.urlToImage || 'https://picsum.photos/300/150';
+                            modalDescription.textContent = article.description || 'No description yet';
+                            modalContent.textContent = article.content || 'No complete content (from API)';
+                            modalSource.textContent = "Source: ".concat(article.source.name);
+                            modalDate.textContent = "Date: ".concat(new Date(article.publishedAt).toLocaleDateString());
+                            modalLink.href = article.url;
+                            modal.style.display = 'flex';
+                        });
+                    });
                     return [3 /*break*/, 5];
                 case 4:
                     error_1 = _a.sent();

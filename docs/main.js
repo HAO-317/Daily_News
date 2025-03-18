@@ -71,7 +71,7 @@ function fetchNews(language, sort, query) {
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 4, , 5]);
-                    console.log('Fetching news for language:', language, 'sort:', sort, 'query:', query); // 调试日志
+                    console.log('Fetching news for language:', language, 'sort:', sort, 'query:', query);
                     return [4 /*yield*/, fetch('/Daily_News/news-data.json')];
                 case 2:
                     response = _a.sent();
@@ -83,21 +83,15 @@ function fetchNews(language, sort, query) {
                     newsData = _a.sent();
                     endTime = performance.now();
                     timeTaken = Math.round(endTime - startTime);
+                    data_1 = newsData["".concat(language, "-").concat(sort)] || { status: "ok", totalResults: 0, articles: [] };
                     if (query) {
-                        data_1 = newsData["".concat(language, "-").concat(sort)];
                         data_1.articles = data_1.articles.filter(function (article) {
                             return article.title.toLowerCase().includes(query.toLowerCase()) ||
                                 (article.description && article.description.toLowerCase().includes(query.toLowerCase()));
                         });
                         data_1.totalResults = data_1.articles.length;
                     }
-                    else {
-                        data_1 = newsData["".concat(language, "-").concat(sort)];
-                    }
                     console.log('API 响应:', data_1);
-                    if (!data_1 || data_1.status !== 'ok') {
-                        throw new Error('Data not available');
-                    }
                     newsContainer.innerHTML = '';
                     resultCount.textContent = data_1.totalResults.toString();
                     loadTime.textContent = timeTaken.toString();

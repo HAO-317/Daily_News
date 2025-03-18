@@ -51,7 +51,7 @@ async function fetchNews(language: string, sort: string, query?: string): Promis
   const startTime: number = performance.now();
 
   try {
-      const response: Response = await fetch('./news-data.json');
+      const response: Response = await fetch('/news-data.json');
       const newsData: NewsData = await response.json();
       const endTime: number = performance.now();
       const timeTaken: number = Math.round(endTime - startTime);

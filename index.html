@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>H317-News</title>
+    <link rel="stylesheet" href="/docs/style.css">
+</head>
+<body>
+    <div class="head-bg">
+        <header class="logo">
+            <h1>H317/News</h1>
+            <h3>Daily news from around the world</h3>
+            <div class="controls">
+                <div class="2contrals">
+                    <button id="font-smaller">A</button>
+                    <button id="font-larger">A</button>
+                </div>
+                <div class="2contrals">
+                    <button id="light-mode">☀️</button>
+                    <button id="dark-mode">🌙</button>
+                </div>
+            </div>
+        </header>
+    
+        <nav class="navbar">
+            <div>
+                <select id="language">
+                    <option value="en">English</option>
+                    <option value="de">Deutsch</option>
+                    <option value="fr">Français</option>
+                    <option value="es">Español</option>
+                    <option value="it">Italiano</option>
+                    <option value="jp">日本語</option>
+                    <option value="zh">中文</option>
+                </select>
+                <select id="sort">
+                    <option value="relevancy">Sort by relevance</option>
+                    <option value="publishedAt">Sort by date</option>
+                </select>
+            </div>
+            <div>
+                <input type="text" id="search" placeholder="Enter keywords to search...">
+                <button id="search-btn">Search</button>
+            </div>
+        </nav>
+    </div>
+    <div class="info-bar" id="info-bar">
+        <p><span id="result-count">0</span> related news were searched, loading time: <span id="load-time">0</span> ms</p>
+    </div>
+
+    <div class="news-container" id="news-container"></div>
+
+    <div class="modal" id="news-modal">
+        <div class="modal-content">
+            <span class="close-btn" id="close-modal">×</span>
+            <h2 id="modal-title"></h2>
+            <img id="modal-image" src="" alt="新闻图片">
+            <p id="modal-description"></p>
+            <div class="content" id="modal-content"></div>
+            <div class="source" id="modal-source"></div>
+            <div class="date" id="modal-date"></div>
+            <a id="modal-link" href="#" target="_blank">Read more</a>
+        </div>
+    </div>
+
+    <script type="module" src="/docs/main.js"></script>
+</body>
+</html>

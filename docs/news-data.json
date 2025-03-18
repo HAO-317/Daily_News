@@ -1,1 +1,32 @@
-{}
+{
+    "en-relevancy": {
+      "status": "ok",
+      "totalResults": 1,
+      "articles": [
+        {
+          "title": "Test News - Relevancy",
+          "description": "A test article sorted by relevancy.",
+          "url": "https://example.com",
+          "urlToImage": "https://picsum.photos/300/150",
+          "source": {"name": "Test Source"},
+          "publishedAt": "2025-03-18T00:00:00Z",
+          "content": "Test content"
+        }
+      ]
+    },
+    "en-publishedAt": {
+      "status": "ok",
+      "totalResults": 1,
+      "articles": [
+        {
+          "title": "Test News - Date",
+          "description": "A test article sorted by date.",
+          "url": "https://example.com",
+          "urlToImage": "https://picsum.photos/300/150",
+          "source": {"name": "Test Source"},
+          "publishedAt": "2025-03-18T00:00:00Z",
+          "content": "Test content"
+        }
+      ]
+    }
+  }

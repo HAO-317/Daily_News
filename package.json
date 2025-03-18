@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
-    "axios": "^1.7.2"
+    "axios": "^1.8.3"
   },
   "scripts": {
     "dev": "vite",
@@ -14,5 +14,21 @@
   "devDependencies": {
     "typescript": "~5.7.2",
     "vite": "^6.2.0"
-  }
+  },
+  "description": "H317 News Station",
+  "main": "fetch-news.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HAO-317/Daily_News.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HAO-317/Daily_News/issues"
+  },
+  "homepage": "https://github.com/HAO-317/Daily_News#readme"
 }

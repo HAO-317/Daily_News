@@ -60,7 +60,14 @@ async function fetchNews(language: string, sort: string, query?: string): Promis
       const endTime: number = performance.now();
       const timeTaken: number = Math.round(endTime - startTime);
 
-      let data: NewsResponse = newsData[`${language}-${sort}`] || { status: "ok", totalResults: 0, articles: [] };
+      // 只 en ，其他语言返回空
+      let data: NewsResponse;
+      if (language === 'en') {
+          data = newsData[`${language}-${sort}`] || { status: "ok", totalResults: 0, articles: [] };
+      } else {
+          data = { status: "ok", totalResults: 0, articles: [] }; // 非 en 显示无
+      }
+
       if (query) {
           data.articles = data.articles.filter(article =>
               article.title.toLowerCase().includes(query.toLowerCase()) ||
@@ -74,8 +81,8 @@ async function fetchNews(language: string, sort: string, query?: string): Promis
       resultCount.textContent = data.totalResults.toString();
       loadTime.textContent = timeTaken.toString();
 
-      if (data.articles.length === 0) {
-          newsContainer.innerHTML = '<div class="loading">No related news</div>';
+      if (data.totalResults === 0) {
+          newsContainer.innerHTML = `<div class="loading">No news available for ${language}</div>`;
           return;
       }
 
@@ -93,7 +100,6 @@ async function fetchNews(language: string, sort: string, query?: string): Promis
           `;
           newsContainer.insertAdjacentHTML('beforeend', newsCard);
       });
-
       updateFontSize();
 
       const newsCards: NodeListOf<HTMLElement> = document.querySelectorAll('.news-card');

@@ -20,7 +20,12 @@ async function fetchNews() {
             }
         }
     }
-    console.log(JSON.stringify(newsData));
+    return newsData;
 }
 
-fetchNews().catch(err => console.error('Fetch failed:', err));
+fetchNews()
+    .then(data => process.stdout.write(JSON.stringify(data)))
+    .catch(err => {
+        console.error('Fetch failed:', err);
+        process.exit(1);
+    });

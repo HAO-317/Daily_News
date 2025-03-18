@@ -1,8 +1,11 @@
 {
   "name": "project-news",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "dependencies": {
+    "axios": "^1.7.2"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

@@ -3,7 +3,7 @@ name: Fetch News Data
 on:
   schedule:
     - cron: '0,30 * * * *' 
-  workflow_dispatch: 
+  workflow_dispatch:
 
 jobs:
   fetch-news:
@@ -16,15 +16,18 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
+          cache: 'npm' 
 
       - name: Install dependencies
         run: npm install axios
 
+      - name: Ensure docs directory exists
+        run: mkdir -p docs
+
       - name: Fetch news data
         env:
           NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
-        run: |
-          node fetch-news.js > docs/news-data.json
+        run: node fetch-news.js > docs/news-data.json
 
       - name: Commit and push changes
         run: |

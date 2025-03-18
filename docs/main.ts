@@ -51,7 +51,7 @@ async function fetchNews(language: string, sort: string, query?: string): Promis
   const startTime: number = performance.now();
 
   try {
-      console.log('Fetching news for language:', language, 'sort:', sort, 'query:', query); // 调试日志
+      console.log('Fetching news for language:', language, 'sort:', sort, 'query:', query);
       const response: Response = await fetch('/Daily_News/news-data.json');
       if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -60,23 +60,16 @@ async function fetchNews(language: string, sort: string, query?: string): Promis
       const endTime: number = performance.now();
       const timeTaken: number = Math.round(endTime - startTime);
 
-      let data: NewsResponse;
+      let data: NewsResponse = newsData[`${language}-${sort}`] || { status: "ok", totalResults: 0, articles: [] };
       if (query) {
-          data = newsData[`${language}-${sort}`];
           data.articles = data.articles.filter(article =>
               article.title.toLowerCase().includes(query.toLowerCase()) ||
               (article.description && article.description.toLowerCase().includes(query.toLowerCase()))
           );
           data.totalResults = data.articles.length;
-      } else {
-          data = newsData[`${language}-${sort}`];
       }
 
       console.log('API 响应:', data);
-      if (!data || data.status !== 'ok') {
-          throw new Error('Data not available');
-      }
-
       newsContainer.innerHTML = '';
       resultCount.textContent = data.totalResults.toString();
       loadTime.textContent = timeTaken.toString();

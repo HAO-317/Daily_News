@@ -1,7 +1,6 @@
 H317 News Station
-
-https://github.com/HAO-317/Daily_News/blob/main/Homepage.png
-https://github.com/HAO-317/Daily_News/blob/main/Homepage%20night.png
+![example](Homepage.png)
+![exemple2](Homepage%20night.png)
 
 
 A simple, responsive news aggregator built with HTML, CSS, and TypeScript, hosted on GitHub Pages. It fetches daily news from around the world using the NewsAPI and displays them in a user-friendly interface. The project uses GitHub Actions to periodically generate static JSON data, ensuring API key security while maintaining a static hosting setup.

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiKey = process.env.NEWS_API_KEY;
-const languages = ['en', 'de', 'fr', 'es', 'it', 'jp', 'zh'];
+const languages = ['en', 'de', 'fr', 'es', 'it', 'ja', 'zh'];
 const sortOptions = ['relevancy', 'publishedAt'];
 
 async function fetchNews() {

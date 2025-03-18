@@ -51,14 +51,13 @@ async function fetchNews(language: string, sort: string, query?: string): Promis
   const startTime: number = performance.now();
 
   try {
-      const response: Response = await fetch('/docs/news-data.json'); // 假设部署在 docs 目录
+      const response: Response = await fetch('./news-data.json');
       const newsData: NewsData = await response.json();
       const endTime: number = performance.now();
       const timeTaken: number = Math.round(endTime - startTime);
 
       let data: NewsResponse;
       if (query) {
-        
           data = newsData[`${language}-${sort}`];
           data.articles = data.articles.filter(article =>
               article.title.toLowerCase().includes(query.toLowerCase()) ||
@@ -69,58 +68,13 @@ async function fetchNews(language: string, sort: string, query?: string): Promis
           data = newsData[`${language}-${sort}`];
       }
 
-      console.log('API 响应:', data);
-
-      if (!data || data.status !== 'ok') {
-          throw new Error('Data not available');
-      }
-
-      newsContainer.innerHTML = '';
-      resultCount.textContent = data.totalResults.toString();
-      loadTime.textContent = timeTaken.toString();
-
-      if (data.articles.length === 0) {
-          newsContainer.innerHTML = '<div class="loading">No related news</div>';
-          return;
-      }
-
-      data.articles.forEach((article: Article, index: number) => {
-          const newsCard: string = `
-              <div class="news-card" data-index="${index}">
-                  <img src="${article.urlToImage || 'https://picsum.photos/300/150'}" alt="News Picture">
-                  <div class="news-content">
-                      <h2>${article.title}</h2>
-                      <p>${article.description || 'No description yet'}</p>
-                      <div class="source">Source: ${article.source.name}</div>
-                      <div class="date">Date: ${new Date(article.publishedAt).toLocaleDateString()}</div>
-                  </div>
-              </div>
-          `;
-          newsContainer.insertAdjacentHTML('beforeend', newsCard);
-      });
-
-      updateFontSize();
-
-      const newsCards: NodeListOf<HTMLElement> = document.querySelectorAll('.news-card');
-      newsCards.forEach((card, index) => {
-          card.addEventListener('click', () => {
-              const article: Article = data.articles[index];
-              modalTitle.textContent = article.title;
-              modalImage.src = article.urlToImage || 'https://picsum.photos/300/150';
-              modalDescription.textContent = article.description || 'No description yet';
-              modalContent.textContent = article.content || 'No complete content (from API)';
-              modalSource.textContent = `Source: ${article.source.name}`;
-              modalDate.textContent = `Date: ${new Date(article.publishedAt).toLocaleDateString()}`;
-              modalLink.href = article.url;
-              modal.style.display = 'flex';
-          });
-      });
+      console.log('API react:', data);
+  
   } catch (error) {
       console.error('Error:', error);
       newsContainer.innerHTML = `<div class="loading">Loading error: ${(error as Error).message || 'unknown error'}</div>`;
   }
 }
-
 
 closeModal.addEventListener('click', () => {
   modal.style.display = 'none';
